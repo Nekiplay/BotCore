@@ -566,7 +566,9 @@ namespace BotCore
 			private List<Update> ProcessResponse(string jsonData)
 			{
 				if (jsonData == "{\"failed\":1}" || jsonData == "{\"failed\":2}" || jsonData == "{\"failed\":3}")
+				{
 					Init();
+				}
 				Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(jsonData);
 				if (myDeserializedClass == null || myDeserializedClass.failed != null)
 				{
