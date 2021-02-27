@@ -216,9 +216,13 @@ namespace Testss
             {
                 int typen = rnd.Next(1, 2 + 1);
                 if (typen == 1)
+                {
                     type = "math";
+                }
                 else if (typen == 2)
+                {
                     type = "image";
+                }
             }
             public void GenerateMath()
             {
@@ -239,6 +243,9 @@ namespace Testss
                         break;
                     case 5:
                         math = "" + rnd.Next(1, 10) + " * " + rnd.Next(1, 10);
+                        break;
+                    default:
+                        math = "";
                         break;
                 }
                 int oo = Convert.ToInt32(Calculator.Calc(math));
