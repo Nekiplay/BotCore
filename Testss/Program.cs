@@ -55,7 +55,9 @@ namespace Testss
                             else if (botuser.captcha.type == "image")
                             {
                                 if (File.Exists("" + botuser.vkid + ".png"))
+                                {
                                     File.Delete("" + botuser.vkid + ".png");
+                                }
                                 botuser.captcha.GenerateImage(50, 25);
                                 botuser.captcha.image.Save("" + botuser.vkid + ".jpg");
                                 vkclient.Messages.Send.TextAndDocument(update.@object.peer_id, "Решите капчу: " + botuser.captcha.math.Replace("+", "%2B"), "" + botuser.vkid + ".jpg", "Captcha");
@@ -210,7 +212,7 @@ namespace Testss
 
         public class Captcha
         {
-            Random rnd = new Random();
+            readonly Random rnd = new Random();
             public string type = "math";
             public void GenerateType()
             {
@@ -303,9 +305,15 @@ namespace Testss
                            new Point(Width - 1, 0));
                 ////Белые точки
                 for (int i = 0; i < Width; ++i)
+                {
                     for (int j = 0; j < Height; ++j)
+                    {
                         if (rnd.Next() % 20 == 0)
+                        {
                             result.SetPixel(i, j, Color.White);
+                        }
+                    }
+                }
 
                 image = result;
             }
