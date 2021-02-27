@@ -54,12 +54,18 @@ namespace BotCore
 						var j = JsonConvert.DeserializeObject(json) as JObject;
 						var link = j["response"]["short_url"].ToString();
 						if (link == "")
+						{
 							return GetShortLink(url);
+						}
 						else
+						{
 							return link;
+						}
 					}
 					else
+					{
 						return "Invalid link format";
+					}
 				}
 			}
 			public class _Docs_
@@ -74,7 +80,9 @@ namespace BotCore
 						return uploadurl;
 					}
 					else
-						return GetMessagesUploadServer(peer_id, type, file);
+					{
+						return "";
+					}
 				}
 				public string GetMessagesUploadServer(int? peer_id, string type, string file)
 				{
@@ -84,16 +92,27 @@ namespace BotCore
 				{
 					var c = new WebClient();
 					var r2 = Encoding.UTF8.GetString(c.UploadFile(url, "POST", file));
-					if (r2 != "") return r2;
-					else return Upload(url, file);
+					if (r2 != "")
+					{
+						return r2;
+					}
+					else
+					{
+						return Upload(url, file);
+					}
 				}
 				public string Save(string file, string title)
 				{
 					var j2 = JsonConvert.DeserializeObject(file) as JObject;
 					string json = CallVkMethod("docs.save", "&file=" + j2["file"].ToString() + "&title=" + title);
 					if (json != "")
+					{
 						return json;
-					else return Save(file, title);
+					}
+					else
+					{
+						return Save(file, title);
+					}
 				}
 				public string Get_Send_Attachment(string file)
 				{
@@ -127,11 +146,19 @@ namespace BotCore
 							{
 								var j = JsonConvert.DeserializeObject(json) as JObject;
 								var link = j["response"]["link"].ToString();
-								if (link == "")
-									return InviteLink(chatId, reset);
-								else return link;
+								if (link != "")
+								{
+									return link;
+								}
+								else
+                                {
+									return "";
+                                }
 							}
-							else return InviteLink(chatId, reset);
+                            else
+                            {
+								return "";
+                            }
 						}
 						catch { return ""; }
 					}
@@ -151,8 +178,6 @@ namespace BotCore
 					public void Text(string chatId, string text, int mentos = 1)
 					{
 						string reply = CallVkMethod("messages.send", "peer_id=" + chatId + "&random_id=" + rnd.Next() + "&message=" + text + "&disable_mentions=" + mentos);
-						if (reply == "")
-							Text(chatId, text, mentos);
 					}
 					public void Text(int? chatId, string text, int mentos = 1)
 					{
@@ -163,8 +188,6 @@ namespace BotCore
 					{
 						string kb = keyboard.GetKeyboard();
 						string reply = CallVkMethod("messages.send", "peer_id=" + chatId + "&random_id=" + rnd.Next() + "&keyboard=" + kb);
-						if (reply == "")
-							Keyboard(chatId, keyboard);
 					}
 					public void Keyboard(int? chatId, Keyboard keyboard)
 					{
@@ -193,8 +216,6 @@ namespace BotCore
 					public void Sticker(string chatId, int sticker_id)
 					{
 						string reply = CallVkMethod("messages.send", "peer_id=" + chatId + "&random_id=" + rnd.Next() + "&sticker_id=" + sticker_id);
-						if (reply == "")
-							Sticker(chatId, sticker_id);
 					}
 					public void Sticker(int? chatId, int? sticker_id)
 					{
@@ -208,8 +229,6 @@ namespace BotCore
 						string r3 = vk.Docs.Save(r2, title);
 						string at = vk.Docs.Get_Send_Attachment(r3);
 						string reply = CallVkMethod("messages.send", "peer_id=" + chatId + "&random_id=" + rnd.Next() + "&message=" + text + "&attachment=" + at);
-						if (reply == "")
-							TextAndDocument(chatId, text, file, title);
 					}
 					public void TextAndDocument(int? chatId, string text, string file, string title)
 					{
@@ -219,8 +238,6 @@ namespace BotCore
 					public void Custom(string chatId, string custom)
 					{
 						string reply = CallVkMethod("messages.send", "peer_id=" + chatId + "&random_id=" + rnd.Next() + custom);
-						if (reply == "")
-							Custom(chatId, custom);
 					}
 					public void Custom(int? chatId, string custom)
 					{
@@ -234,8 +251,6 @@ namespace BotCore
 						if (user_id != BotCommunityId)
 						{
 							string json = CallVkMethod("messages.removeChatUser", "chat_id=" + chat_id + "&member_id=" + "-" + user_id);
-							if (json == "")
-								Group(chat_id, user_id);
 						}
 					}
 					public void Group(int? chat_id, int user_id)
@@ -246,8 +261,6 @@ namespace BotCore
 					public void User(string chat_id, string user_id)
 					{
 						string json = CallVkMethod("messages.removeChatUser", "chat_id=" + chat_id + "&user_id=" + user_id + "&member_id=" + user_id);
-						if (json == "")
-							User(chat_id, user_id);
 					}
 					public void User(int? chat_id, int? user_id)
 					{
@@ -274,9 +287,13 @@ namespace BotCore
 				public void Online(bool enable = true)
 				{
 					if (enable)
+					{
 						CallVkMethod("groups.enableOnline", "group_id=" + BotCommunityId);
+					}
 					else
+					{
 						CallVkMethod("groups.disableOnline", "group_id=" + BotCommunityId);
+					}
 				}
 
 				public string GetName_ByID(int? group_id)
@@ -284,13 +301,16 @@ namespace BotCore
 					try
 					{
 						string js = CallVkMethod("groups.getById", "group_id=" + group_id);
-						if (js != "")
-						{
-							var j3 = JsonConvert.DeserializeObject(js) as JObject;
-							string name = j3["response"][0]["name"].ToString();
-							return name;
-						}
-						else return GetName_ByID(group_id);
+                        if (js != "")
+                        {
+                            var j3 = JsonConvert.DeserializeObject(js) as JObject;
+                            string name = j3["response"][0]["name"].ToString();
+                            return name;
+                        }
+                        else
+                        {
+							return "";
+                        }
 					}
 					catch { return ""; }
 				}
@@ -313,7 +333,10 @@ namespace BotCore
 							string name = j3["response"][0]["first_name"].ToString();
 							return name;
 						}
-						else return Get_FirstName_ByID(user_id);
+						else
+						{
+							return "";
+						}
 					}
 					catch { return ""; }
 				}

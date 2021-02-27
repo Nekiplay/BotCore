@@ -15,8 +15,8 @@ namespace Testss
         public static Vk.VkLongPoolClient vkclient;
         public static void Main(string[] args)
         {
-            vkclient = new Vk.VkLongPoolClient("token", "botid", MSG);
-            Console.WriteLine("Bot Eneabled");
+            vkclient = new Vk.VkLongPoolClient("38d2b5c23f89850bb1a3f5c1503fd683cdd7155e694ea285a5a9fa817f4bddb8d085c813f7348019ce286", "190175842", MSG);
+            Console.WriteLine("Бот включен");
             Console.ReadKey();
         }
         public static void MSG(Vk.VkLongPoolClient.Update update)
