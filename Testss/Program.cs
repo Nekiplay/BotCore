@@ -250,7 +250,9 @@ namespace Testss
                 }
                 int oo = Convert.ToInt32(Calculator.Calc(math));
                 if (oo <= 4)
+                {
                     GenerateMath();
+                }
                 else
                 {
                     type = "math";
