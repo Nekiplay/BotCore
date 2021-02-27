@@ -200,8 +200,6 @@ namespace BotCore
 						{
 							string kb = keyboard.GetKeyboard();
 							string reply = CallVkMethod("messages.send", "peer_id=" + chatId + "&random_id=" + rnd.Next() + "&message=" + text + "&keyboard=" + kb);
-							if (reply == "")
-								TextAndKeyboard(chatId, text, keyboard);
 						}
 						else
                         {
